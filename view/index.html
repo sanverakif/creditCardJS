@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../app/card.js"></script>
+    <script>
+        $(function () {
+            alert("Sayfa Load Oldu")
+
+            $("#inputButtonCreditCardNumber").click(function () {
+                var creditCardNumber = $("#inputTextCreditCardNumber").val()
+                lblSonuc = validCreditCard(creditCardNumber);
+                if (lblSonuc) {
+                    $("#lblSonuc").text("Kredi kartı valid").css("color", "green");
+                    return true
+                }
+                else
+                    $("#lblSonuc").text("*Kredi kartı valid degil").css("color", "red");
+                return false
+            })
+            $('#inputTextCreditCardNumber').on('input', function () {
+
+                var c = this.selectionStart,
+                    r = /[^a-z0-9]/gi,
+                    v = $(this).val();
+                if (r.test(v)) {
+                    $(this).val(v.replace(r, ''));
+                    c--;
+                }
+                this.setSelectionRange(c, c);
+
+                if (this.value.match(/[^0-9]/g) != null) {
+
+                    return false
+
+                }
+            })
+            //geçersiz
+            // $('#inputTextCreditCardNumber').on('keyup', function (e) {
+            //     var val = $(this).val();
+            //     var newval = '';
+            //     val = val.replace(/\s/g, '');
+            //     for (var i = 0; i < val.length; i++) {
+            //         if (i % 4 == 0 && i > 0) newval = newval.concat(' ');
+            //         newval = newval.concat(val[i]);
+            //     }
+            //     $(this).val(newval);
+            // })
+
+            // var obj = $("#inputTextCreditCardNumber").val();
+            // var indexCount = obj.length - 1;
+            // if (indexCount >= 3 && indexCount <= 8) {
+            //     $("#inputTextCreditCardNumber").replaceAll('-', '');
+            //     var newObj = $("#inputTextCreditCardNumber").val()
+            //     $("#inputTextCreditCardNumber").val(newObj + "-")
+            // }
+
+            debugger
+            $(document).ready(function () {
+                $('#lblTemizle').click(function () {
+                    if (confirm("Text silinsin mi")) {
+                        //$('#form1 input[type="text"]').val('');      
+                        //id                  
+                        $('#form1 #inputTextCreditCardNumber').val('');
+                    }
+                });
+            });
+        })
+    </script>
+
+<body>
+    <div class="card">
+        <form id="form1">
+            <h1 class="card__title">Enter Payment Information</h1>
+            <div class="card__row">
+                <div class="card__col">
+                    <input type="text" id="inputTextCreditCardNumber" maxlength="19" />
+                    <label id="lblSonuc" class="card_label"></label>
+                    <!-- <br><label id="lblSonuc2" class="card_label"></label> -->
+                    <br>
+                    <br>
+                    <input type="button" value='Kontrol Et' id="inputButtonCreditCardNumber" />
+                    <input type="button" value='Temizle' id="lblTemizle" />
+                </div>
+            </div>
+    </div>
+    </form>
+    </div>
+</body>
+
+</html>
